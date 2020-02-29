@@ -709,9 +709,14 @@ class ELBListenerRules(object):
         :return:
         """
 
+        if 'Field' not in condition or 'Values' not in condition:
+            return False
+
         condition_found = False
 
         for current_condition in current_conditions:
+            if 'Field' not in current_condition or 'Values' not in current_condition:
+                continue
             if current_condition.get('SourceIpConfig'):
                 if (current_condition['Field'] == condition['Field'] and
                         current_condition['SourceIpConfig']['Values'][0] == condition['SourceIpConfig']['Values'][0]):
